@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Prompt Library</title>
+	<link rel="stylesheet" href="./styles.css" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+	<header class="app-header">
+		<div class="brand">
+			<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"/></svg>
+			<h1>Prompt Library</h1>
+		</div>
+		<div class="header-actions">
+			<button id="exportBtn" class="ghost" title="Export prompts JSON" aria-label="Export prompts">Export</button>
+			<label class="theme-toggle" title="Toggle theme">
+				<input type="checkbox" id="themeSwitch" aria-label="Toggle dark mode" checked>
+				<span class="slider"></span>
+			</label>
+		</div>
+	</header>
+
+	<main class="layout">
+		<section class="panel create-panel" aria-labelledby="createHeading">
+			<h2 id="createHeading">Create Prompt</h2>
+			<form id="promptForm" autocomplete="off">
+				<div class="field-group">
+					<label for="title">Title</label>
+					<input id="title" name="title" type="text" placeholder="e.g. Blog Post Outline" required maxlength="120" />
+				</div>
+				<div class="field-group">
+					<label for="content">Prompt Content</label>
+					<textarea id="content" name="content" placeholder="Write your prompt with variables like {{topic}} or {{tone}}" required rows="8"></textarea>
+				</div>
+				<div class="actions-row">
+					<button type="submit" class="primary">Save Prompt</button>
+					<button type="reset" class="ghost" id="resetBtn">Clear</button>
+				</div>
+			</form>
+			<p class="hint">Prompts are stored locally in your browser (localStorage). No data leaves your machine.</p>
+		</section>
+
+		<section class="panel list-panel" aria-labelledby="libraryHeading">
+			<div class="list-header">
+				<h2 id="libraryHeading">Saved Prompts</h2>
+				<div class="search-wrap">
+					<input type="search" id="searchBox" placeholder="Search prompts..." aria-label="Search prompts" />
+				</div>
+			</div>
+			<div id="emptyState" class="empty-state" hidden>
+				<p>No prompts saved yet.</p>
+				<p>Add your first prompt using the form on the left.</p>
+			</div>
+			<ul id="promptList" class="prompt-list" aria-live="polite" aria-label="Prompt list"></ul>
+		</section>
+	</main>
+
+	<template id="promptItemTemplate">
+		<li class="prompt-card" data-id="">
+			<div class="card-header">
+				<h3 class="prompt-title"></h3>
+				<div class="card-actions">
+					<button class="icon-btn copy-btn" title="Copy prompt" aria-label="Copy prompt">
+						<span class="material-icon">📋</span>
+					</button>
+					<button class="icon-btn delete-btn" title="Delete prompt" aria-label="Delete prompt">
+						<span class="material-icon">🗑️</span>
+					</button>
+				</div>
+			</div>
+			<pre class="prompt-content"></pre>
+			<div class="meta-row">
+				<time class="timestamp" datetime=""></time>
+			</div>
+		</li>
+	</template>
+
+	<div id="toast" role="status" aria-live="polite"></div>
+
+	<script src="./app.js" type="module"></script>
+</body>
+</html>
